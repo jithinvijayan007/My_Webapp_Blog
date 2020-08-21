@@ -16,7 +16,10 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from blogs import views as blogs_views
+from users import views as users_views
 from blogs.views import BlogCreateView,BlogListView,BlogDetailView,BlogUpdateView,BlogDeleteView
+
+from django.contrib.auth import views as auth_views
 
 from django.conf import settings
 from django.conf.urls.static import static
@@ -28,5 +31,8 @@ urlpatterns = [
     path('post/detail/<int:pk>/',BlogDetailView.as_view(),name="detail"),
     path('post/<int:pk>/update/',BlogUpdateView.as_view(),name="update"),
     path('post/<int:pk>/delete/',BlogDeleteView.as_view(),name="delete"),
+    path('user/register/',users_views.register,name="register"),
+    path('user/login/',auth_views.LoginView.as_view(template_name="users/login.html"),name="login"),
+    path('user/logout/',auth_views.LogoutView.as_view(template_name="users/logout.html"),name="logout"),
     path('admin/', admin.site.urls),
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -15,7 +15,18 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from blogs import views as blogs_views
+from blogs.views import BlogCreateView,BlogListView,BlogDetailView,BlogUpdateView,BlogDeleteView
+
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
+    path('',blogs_views.index,name="index"),
+    path('post/create/',BlogCreateView.as_view(),name="create"),
+    path('post/list/',BlogListView.as_view(),name="list"),
+    path('post/detail/<int:pk>/',BlogDetailView.as_view(),name="detail"),
+    path('post/<int:pk>/update/',BlogUpdateView.as_view(),name="update"),
+    path('post/<int:pk>/delete/',BlogDeleteView.as_view(),name="delete"),
     path('admin/', admin.site.urls),
-]
+]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

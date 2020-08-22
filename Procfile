@@ -1,0 +1,1 @@
+web: gunicorn FinalBlog.wsgi
